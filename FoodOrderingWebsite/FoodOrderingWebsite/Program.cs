@@ -1,8 +1,20 @@
+using FoodOrderingWebsite.Helper;
+using FoodOrderingWebsite.Models;
+using FoodOrderingWebsite.Repository.Category;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<FoodWebsiteDbContext>(options =>
+                            options.UseSqlServer
+                           (builder.Configuration.GetConnectionString("FoodDB")));
+//Add Service for DbHelper
+builder.Services.AddSingleton<DbHelper>();
+//Register Services for Category
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
