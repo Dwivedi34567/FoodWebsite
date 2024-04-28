@@ -53,7 +53,7 @@ public partial class FoodWebsiteDbContext : DbContext
             entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0BC2EA1150");
 
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.ImageUrl).IsUnicode(false);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);

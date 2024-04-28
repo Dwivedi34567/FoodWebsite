@@ -15,7 +15,9 @@ namespace FoodOrderingWebsite.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var model = new CategoryViewModel();
+            model.CategoryList = _categoryRepository.GetCategoryList();
+            return View(model);
         }
 
         [HttpPost]

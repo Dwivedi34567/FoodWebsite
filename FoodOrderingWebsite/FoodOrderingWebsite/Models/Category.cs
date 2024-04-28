@@ -9,13 +9,15 @@ public partial class Category
 
     public string? Name { get; set; }
 
-    public string? ImageUrl { get; set; }
-
     public bool? IsActive { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 
     public DateTime? UpdatedDate { get; set; }
+
+    public bool? IsDeleted { get; set; }
+
+    public byte[]? ImageUrl { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

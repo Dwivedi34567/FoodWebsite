@@ -8,8 +8,9 @@ namespace FoodOrderingWebsite.ViewModel
         [Required(ErrorMessage = "Category name is required")]
         public string CategoryName { get; set; }
 
-        public string CategoryID { get; set; }
+        public int CategoryID { get; set; }
         public bool IsActive { get; set; }
-        public byte[]? ImageData { get; set; }
+        public byte[] ImageData { get; set; }
+        public List<CategoryViewModel>? CategoryList { get; set; }
     }
 }
