@@ -26,6 +26,8 @@ namespace FoodOrderingWebsite.Controllers
             try
             {
                 ModelState.Remove("CategoryID");
+                ModelState.Remove("CategoryList");
+                ModelState.Remove("ImageData");
 
                 if (ModelState.IsValid)
                 {
@@ -55,6 +57,20 @@ namespace FoodOrderingWebsite.Controllers
                 ViewBag.ErrorMessage = ex.Message;
                 ViewBag.IsSuccess = false;
                 return View("Index", category);
+            }
+        }
+
+     
+        public IActionResult EditCategory(int categoryId)
+        {
+            try
+            {
+
+                return View();
+            }
+            catch
+            {
+                throw;
             }
         }
 

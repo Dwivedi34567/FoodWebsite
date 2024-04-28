@@ -11,6 +11,6 @@ namespace FoodOrderingWebsite.ViewModel
         public int CategoryID { get; set; }
         public bool IsActive { get; set; }
         public byte[] ImageData { get; set; }
-        public List<CategoryViewModel>? CategoryList { get; set; }
+        public List<CategoryViewModel> CategoryList { get; set; }
     }
 }

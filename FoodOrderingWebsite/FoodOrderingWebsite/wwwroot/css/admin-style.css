@@ -14337,3 +14337,20 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     background-color: #444c67; }
 
 /*# sourceMappingURL=style.css.map */
+
+
+.category-image {
+    width:100px;
+    height:100px;
+    border-radius:14px;
+}
+
+.blue-icon {
+    color: blue;
+    font-size:20px;
+}
+
+.red-icon {
+    color: red;
+    font-size: 20px;
+}

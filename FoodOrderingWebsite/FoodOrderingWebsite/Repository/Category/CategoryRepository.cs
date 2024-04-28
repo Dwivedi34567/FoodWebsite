@@ -40,7 +40,7 @@ namespace FoodOrderingWebsite.Repository.Category
                  {
 
                        { "CategoryName",category.CategoryName },
-                       {"ImageUrl",base64ImageData},
+                       { "ImageUrl",category.ImageData},
                        { "IsActive",category.IsActive}
                  };
                 return _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
@@ -69,13 +69,7 @@ namespace FoodOrderingWebsite.Repository.Category
                     CategoryViewModel Category = new CategoryViewModel();
                     Category.CategoryID = Convert.ToInt32(row["CategoryID"]);
                     Category.CategoryName = row["Name"].ToString();
-
-                    // Retrieve image data as byte array
-                    if (row["ImageUrl"] != DBNull.Value)
-                    {
-                        Category.ImageData = (byte[])row["ImageUrl"];
-                    }
-
+                    Category.ImageData = (byte[])row["ImageUrl"];
                     // Convert "IsActive" to bool
                     Category.IsActive = Convert.ToBoolean(row["IsActive"]);
 
@@ -89,7 +83,28 @@ namespace FoodOrderingWebsite.Repository.Category
                 throw new Exception("Error occurred while getting category list.", ex);
             }
         }
+        public DataTable EditCategory(CategoryViewModel category)
+        {
+            try
+            {
+                string procedureName = "spEditCategory";
+                string base64ImageData = category.ImageData != null ? Convert.ToBase64String(category.ImageData) : null;
 
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                 {
+                       { "CategoryId", category.CategoryID },
+                       { "CategoryName", category.CategoryName },
+                       { "ImageUrl", category.ImageData},
+                       { "IsActive", category.IsActive}
+                 };
+                return _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
     }
 }
