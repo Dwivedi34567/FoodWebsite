@@ -1,7 +1,10 @@
-﻿namespace FoodOrderingWebsite.Repository.Category
+﻿using FoodOrderingWebsite.ViewModel;
+using System.Data;
+
+namespace FoodOrderingWebsite.Repository.Category
 {
     public interface ICategoryRepository
     {
-
+        DataTable AddCategory(CategoryViewModel category);
     }
 }
