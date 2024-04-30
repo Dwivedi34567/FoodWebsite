@@ -1,4 +1,5 @@
 ﻿using FoodOrderingWebsite.Helper;
+using FoodOrderingWebsite.Models;
 using FoodOrderingWebsite.ViewModel;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -98,6 +99,36 @@ namespace FoodOrderingWebsite.Repository.Category
                        { "IsActive", category.IsActive}
                  };
                 return _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public CategoryViewModel GetCategoryById(int categoryId)
+        {
+            try
+            {
+                CategoryViewModel category = new CategoryViewModel();
+                string procedureName = "spGetCategoryByID";
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                 {
+                       { "CategoryId", categoryId }
+                 };
+                DataTable result =  _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
+                if (result.Rows.Count > 0)
+                {
+                    // Assuming categoryId is in the first row and first column of the DataTable
+                    // You might need to adjust this based on your actual DataTable structure
+                    category.CategoryID = Convert.ToInt32(result.Rows[0]["categoryId"]);
+                    // Assuming Name, IsActive, and ImageUrl are in columns with these names
+                    // You might need to adjust these based on your actual DataTable structure
+                    category.CategoryName = result.Rows[0]["Name"].ToString();
+                    category.IsActive = Convert.ToBoolean(result.Rows[0]["IsActive"]);
+                    category.ImageData = (byte[])result.Rows[0]["ImageUrl"];
+                }
+                return category;
 
             }
             catch

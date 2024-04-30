@@ -8,5 +8,6 @@ namespace FoodOrderingWebsite.Repository.Category
         DataTable AddCategory(CategoryViewModel category);
         List<CategoryViewModel> GetCategoryList();
         DataTable EditCategory(CategoryViewModel category);
+        CategoryViewModel GetCategoryById(int categoryId);
     }
 }

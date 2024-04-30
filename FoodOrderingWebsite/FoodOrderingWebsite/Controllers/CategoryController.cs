@@ -65,8 +65,8 @@ namespace FoodOrderingWebsite.Controllers
         {
             try
             {
-
-                return View();
+                CategoryViewModel category = _categoryRepository.GetCategoryById(categoryId);
+                return View(category);
             }
             catch
             {
@@ -74,5 +74,32 @@ namespace FoodOrderingWebsite.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult EditCategory(CategoryViewModel category, IFormFile CategoryImage)
+        {
+            try
+            {
+                    // Convert uploaded image to byte array
+                    if (CategoryImage != null && CategoryImage.Length > 0)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            CategoryImage.CopyTo(memoryStream);
+                            category.ImageData = memoryStream.ToArray();
+                        }
+                    }
+
+                    DataTable results = _categoryRepository.EditCategory(category);
+                    if (results != null && results.Rows.Count == 0)
+                    {
+                        ViewBag.IsSuccess = true;
+                    }
+                return View("EditCategory",category);
+            }
+            catch 
+            {
+                throw;
+            }
+        }
     }
 }

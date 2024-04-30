@@ -73,6 +73,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @if(Model.CategoryList != null && @Model != null){
                                                     @foreach (var category in Model.CategoryList)
                                                     {
                                                         <tr>
@@ -92,7 +93,8 @@
                                                             </td>
                                                             <td><a href="/DeleteCategory/@category.CategoryID"><i class="bi bi-trash red-icon"></i></a></td>
                                                         </tr>
-                                                    } 
+                                                     } 
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
