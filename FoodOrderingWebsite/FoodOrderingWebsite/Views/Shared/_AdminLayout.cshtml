@@ -24,6 +24,16 @@
     <!-- Style.css -->
     <link href="~/css/admin-style.css" rel="stylesheet" />
     <link href="~/css/jquery.mcustomscrollbar.css" rel="stylesheet" />
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+
     @RenderSection("styles", required: false) <!-- Render additional styles if any -->
 </head>
 
@@ -130,7 +140,7 @@
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Overview</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="active">
-                                    <a href="index.html">
+                                    <a href="~/Admin/Index">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
@@ -213,26 +223,6 @@
                         </div>
                     </nav>
                     <div class="pcoded-content">
-                        <div class="card borderless-card">
-                            <div class="card-block danger-breadcrumb">
-                                
-                                <div class="page-header-breadcrumb">
-                                    <ul class="breadcrumb-title">
-                                        <li class="breadcrumb-item">
-                                            <a href="#!">
-                                                <i class="icofont icofont-home"></i>
-                                            </a>
-                                        </li>
-                                        <li class="breadcrumb-item">
-                                            <a href="#!">Breadcrumb</a>
-                                        </li>
-                                        <li class="breadcrumb-item">
-                                            <a href="#!">Caption Breadcrumb</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                         @RenderBody()
                     </div>
                 </div>

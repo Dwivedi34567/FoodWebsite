@@ -66,33 +66,31 @@
                                             <table id="Category" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                        <th>Category Name</th>
-                                                        <th>Image</th>
-                                                        <th>Edit</th>
-                                                        <th>Delete</th>
+                                                        <th>Category</th>
+                                                        <th>Picture</th>
+                                                        <th>Action/s</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if(Model.CategoryList != null && @Model != null){
-                                                    @foreach (var category in Model.CategoryList)
+                                                    @if (Model != null && Model.CategoryList != null)
                                                     {
-                                                        <tr>
-                                                            <td>@category.CategoryName</td>
-                                                            <td>
-                                                                @if (category.ImageData != null && category.ImageData.Length > 0)
-                                                                {
-                                                                    string imageBase64 = Convert.ToBase64String(category.ImageData);
-                                                                    <img src="data:image/jpg;base64,@imageBase64" alt="@category.CategoryName" class="category-image" />
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span>No Image</span>
-                                                                }
-                                                            </td>
-                                                                <td><a href="@Url.Action("EditCategory", "Category", new { categoryId = category.CategoryID })"><i class="bi bi-pencil-square text-primary"></i></a></td>
-                                                                <td><a href="/DeleteCategory/@category.CategoryID"><i class="bi bi-trash text-danger"></i></a></td>
-                                                        </tr>
-                                                     } 
+                                                        @foreach (var category in Model.CategoryList)
+                                                        {
+                                                            <tr>
+                                                                <td>@category.CategoryName</td>
+                                                                <td>
+                                                                    @if (category.ImageData != null && category.ImageData.Length > 0)
+                                                                    {
+                                                                        string imageBase64 = Convert.ToBase64String(category.ImageData);
+                                                                        <img src="data:image/jpg;base64,@imageBase64" alt="@category.CategoryName" class="category-image" />
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    <a href="@Url.Action("EditCategory", "Category", new { categoryId = category.CategoryID })"><i class="bi bi-pencil-square text-primary"></i></a>
+                                                                    <a href="@Url.Action("DeleteCategory", "Category", new { categoryId = category.CategoryID })" class="delete"><i class="bi bi-trash text-danger"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        }
                                                     }
                                                 </tbody>
                                             </table>
@@ -118,15 +116,60 @@
 </script>
 
  <script>
-    function previewImage(input) {
+     function previewImage(input) {
         var imgPreview = document.getElementById('imgPreview');
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                imgPreview.src = e.target.result;
+                var mimeType = getImageMimeType(input.files[0]);
+                var dataURL = e.target.result;
+                imgPreview.src = "data:" + mimeType + ";base64," + dataURL.split(',')[1];
                 imgPreview.style.display = 'block';
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    // Function to get MIME type from image file
+    function getImageMimeType(file) {
+        var mimeType = file.type;
+        if (!mimeType) {
+            mimeType = "image/jpeg"; // default to JPEG if type is not available
+        }
+        return mimeType;
+    }
+
+    $('.delete').click(function (event) {
+        event.preventDefault();
+
+        // Get the categoryId from the anchor tag's href attribute
+        var categoryId = $(this).attr('href').split('=')[1];
+
+        // Display a confirmation dialog to the user
+        if (confirm("Are you sure you want to delete this user?")) {
+            $.ajax({
+                url: '/Category/DeleteCategory', // Adjust the URL as needed
+                type: 'DELETE', // Use the correct HTTP method
+                data: { categoryId: categoryId }, // Pass the categoryId as data
+                success: function (response) {
+                    // Assuming the response is in JSON format with a 'success' property
+                    if (response.success) {
+                        // Optionally, you can refresh the page or update the UI here.
+                        alert("Deleted Successfully!");
+                        location.reload();
+                    } else {
+                        alert("Deletion failed!");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Display a more informative error message.
+                    alert("AJAX error: " + status + "\nError: " + error);
+                }
+            });
+        } else {
+            // User canceled the operation
+            alert('Deletion Canceled');
+        }
+    });
+
 </script>

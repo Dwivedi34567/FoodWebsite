@@ -45,6 +45,9 @@ namespace FoodOrderingWebsite.Controllers
                     if (results != null && results.Rows.Count == 0)
                     {
                         ViewBag.IsSuccess = true;
+                        var model = new CategoryViewModel();
+                        model.CategoryList = _categoryRepository.GetCategoryList();
+                        return View("Index",model);
                     }
                 }
                 // If validation fails, return the form with error messages
@@ -106,5 +109,24 @@ namespace FoodOrderingWebsite.Controllers
                 throw;
             }
         }
+
+        [HttpDelete]
+        public IActionResult DeleteCategory(int categoryId)
+        {
+            try
+            {
+                bool isDeleted = _categoryRepository.DeleteCategory(categoryId);
+                if(isDeleted)
+                {
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
+        }
+
     }
 }

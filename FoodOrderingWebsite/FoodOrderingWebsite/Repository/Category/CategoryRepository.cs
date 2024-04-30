@@ -159,5 +159,25 @@ namespace FoodOrderingWebsite.Repository.Category
                 throw;
             }
         }
+
+        public bool DeleteCategory(int categoryId)
+        {
+            try
+            {
+                bool status = false;
+                string procedureName = "spDeleteCategory";
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                 {
+                       { "CategoryId", categoryId }
+                 };
+                DataTable result = _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
+                status = Convert.ToBoolean(result.Rows[0]["Status"]);
+                return status;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace FoodOrderingWebsite.Repository.Category
         CategoryViewModel GetCategoryById(int categoryId);
 
         byte[] GetCategoryImageById(int categoryId);
+
+        bool DeleteCategory(int categoryId);
     }
 }
