@@ -1,4 +1,5 @@
-﻿using FoodOrderingWebsite.Repository.Category;
+﻿using FoodOrderingWebsite.Models;
+using FoodOrderingWebsite.Repository.Category;
 using FoodOrderingWebsite.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -16,9 +17,10 @@ namespace FoodOrderingWebsite.Controllers
         public IActionResult Index()
         {
             var model = new CategoryViewModel();
-            model.CategoryList = _categoryRepository.GetCategoryList();
+            model.CategoryList = _categoryRepository.GetCategoryList() ?? new List<CategoryViewModel>();
             return View(model);
         }
+
 
         [HttpPost]
         public IActionResult AddCategory(CategoryViewModel category, IFormFile CategoryImage)

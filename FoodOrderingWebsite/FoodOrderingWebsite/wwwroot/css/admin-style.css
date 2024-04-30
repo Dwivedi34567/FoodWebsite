@@ -14349,3 +14349,21 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     margin:7px;
     font-size:18px;
 }
+
+/*adding css form Delete popup*/
+#deletegroup .modal-body {
+    padding-top: 30px !important;
+}
+
+#deletegroup span.delete-text {
+    color: #0D0D0D;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    padding: 0px 30px;
+}
+
+#deletegroup button.btn.btn-primary.danger {
+    background-color: #FF3B3B !important;
+}

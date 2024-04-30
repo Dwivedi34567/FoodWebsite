@@ -81,7 +81,8 @@ namespace FoodOrderingWebsite.Repository.Category
             catch (Exception ex)
             {
                 // Log or handle the exception appropriately
-                throw new Exception("Error occurred while getting category list.", ex);
+                Console.Write(ex.ToString());
+                return new List<CategoryViewModel>();
             }
         }
         public DataTable EditCategory(CategoryViewModel category)
