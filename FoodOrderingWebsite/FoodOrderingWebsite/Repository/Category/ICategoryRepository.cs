@@ -9,5 +9,7 @@ namespace FoodOrderingWebsite.Repository.Category
         List<CategoryViewModel> GetCategoryList();
         DataTable EditCategory(CategoryViewModel category);
         CategoryViewModel GetCategoryById(int categoryId);
+
+        byte[] GetCategoryImageById(int categoryId);
     }
 }

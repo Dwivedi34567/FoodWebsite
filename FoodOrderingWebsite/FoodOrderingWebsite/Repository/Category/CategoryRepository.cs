@@ -137,5 +137,27 @@ namespace FoodOrderingWebsite.Repository.Category
             }
         }
 
+        public byte[] GetCategoryImageById(int categoryId)
+        {
+            try
+            {
+                byte[] imageUrl = null;
+                string procedureName = "spGetCategoryImageByID";
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                 {
+                       { "CategoryId", categoryId }
+                 };
+                DataTable result = _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
+                if (result.Rows.Count > 0)
+                {
+                     imageUrl = (byte[])result.Rows[0]["ImageUrl"];
+                }
+                return imageUrl;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

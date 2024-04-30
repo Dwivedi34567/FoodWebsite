@@ -88,6 +88,11 @@ namespace FoodOrderingWebsite.Controllers
                             category.ImageData = memoryStream.ToArray();
                         }
                     }
+                    else
+                    {
+                      byte[] imageUrl = _categoryRepository.GetCategoryImageById(category.CategoryID);
+                      category.ImageData = imageUrl;
+                    }
 
                     DataTable results = _categoryRepository.EditCategory(category);
                     if (results != null && results.Rows.Count == 0)

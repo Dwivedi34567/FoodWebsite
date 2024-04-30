@@ -14340,17 +14340,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 
 
 .category-image {
-    width:100px;
-    height:100px;
-    border-radius:14px;
-}
-
-.blue-icon {
-    color: blue;
-    font-size:20px;
-}
-
-.red-icon {
-    color: red;
-    font-size: 20px;
+    width:40px;
+    height:40px;
+    border-radius:10px;
 }

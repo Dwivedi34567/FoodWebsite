@@ -89,9 +89,8 @@
                                                                     <span>No Image</span>
                                                                 }
                                                             </td>
-                                                            <td><a href="@Url.Action("EditCategory", "Category", new { categoryId = category.CategoryID })"><i class="bi bi-pencil-square blue-icon"></i></a>
-                                                            </td>
-                                                            <td><a href="/DeleteCategory/@category.CategoryID"><i class="bi bi-trash red-icon"></i></a></td>
+                                                                <td><a href="@Url.Action("EditCategory", "Category", new { categoryId = category.CategoryID })"><i class="bi bi-pencil-square text-primary"></i></a></td>
+                                                                <td><a href="/DeleteCategory/@category.CategoryID"><i class="bi bi-trash text-danger"></i></a></td>
                                                         </tr>
                                                      } 
                                                     }
