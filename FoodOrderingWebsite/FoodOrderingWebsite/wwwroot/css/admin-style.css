@@ -14367,3 +14367,10 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 #deletegroup button.btn.btn-primary.danger {
     background-color: #FF3B3B !important;
 }
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none; /* Hide the text showing the number of entries */
+}
+div.dataTables_wrapper div.dataTables_filter label {
+    margin-left:30px;
+}

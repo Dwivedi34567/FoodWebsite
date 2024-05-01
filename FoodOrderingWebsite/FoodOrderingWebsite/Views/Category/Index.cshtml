@@ -144,9 +144,13 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#Category').DataTable();
+        $('#Category').DataTable({
+            "pagingType": "simple", // Use simple pagination style with only previous and next buttons
+            "pageLength": 4 // Set page size to 4
+        });
     });
 </script>
+
 
  <script>
      function previewImage(input) {
