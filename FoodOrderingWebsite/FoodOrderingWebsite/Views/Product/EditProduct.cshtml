@@ -1,0 +1,109 @@
+﻿@model FoodOrderingWebsite.ViewModel.ProductViewModel;
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "EditProductPage";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="sub-title">Product</h4>
+            <form action="/Product/EditProduct" method="POST" enctype="multipart/form-data">
+                <!-- Success/Error Messages -->
+                @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+                {
+                    <div class="alert alert-success" role="alert">
+                        Product updated successfully
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                <!-- Product Name -->
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" name="ProductName" class="form-control" placeholder="Enter Product Name" value="@Model.ProductName">
+                    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+                    <span class="validation-message text-danger"></span>
+                </div>
+                <!-- Product Description -->
+                <div class="form-group">
+                    <label>Product Description</label>
+                   <textarea name="ProductDescription" class="form-control" placeholder="Enter Product Description">@Model.ProductDescription</textarea>
+                    <span class="validation-message text-danger"></span>
+                </div>
+                <!-- Product Price -->
+                <div class="form-group">
+                    <label>Product Price</label>
+                    <input type="text" name="ProductPrice" class="form-control" value="@Model.ProductPrice" placeholder="Enter Product Price">
+                    <span class="validation-message text-danger"></span>
+                </div>
+               
+                <!-- Product Category -->
+                <div class="form-group">
+                    <label>Product Category</label>
+                    <select name="CategoryID" class="form-control form-control-solid form-control-lg">
+                      
+                        @if (Model != null && Model.ProductCategoryList != null)
+                        {
+                            @foreach (var Category in Model.ProductCategoryList)
+                            {
+                                if(Category.CategoryID == Model.CategoryID && Category.ProductCategory == Model.ProductCategory)
+                                {
+                                    <option value="@Model.CategoryID" selected>@Model.ProductCategory</option>
+                                }
+                                else
+                                {
+                                     <option value="@Category.CategoryID">@Category.ProductCategory</option>
+                                }
+                               
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No Category Found</option>
+                        }
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+                <!-- Product Image -->
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="file" name="ProductImage" value="@Model.ProductImage" class="form-control" onchange="previewImage(this);">
+                </div>
+                <!-- IsActive Checkbox -->
+                <div class="form-check pl-4">
+                    <input type="checkbox" id="IsActive" value="@Model.IsActive" name="IsActive" class="form-check-input is-active" value="true" @(Model.IsActive ? "checked" : "")>
+                    <label class="form-check-label" for="IsActive">IsActive</label>
+                </div>
+                <!-- Buttons -->
+                <div class="pb-3"></div> <!-- Add some padding between the IsActive checkbox and the buttons -->
+                <div>
+                    <button type="submit" class="btn btn-primary mr-2">Update</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                </div>
+                <!-- Image Preview -->
+                <div class="pb-5">&nbsp;</div>
+                <div>
+            <img src="data:image/jpg;base64,@Convert.ToBase64String(@Model.ProductImage)" alt="@Model.ProductName" id="imgPreview" class="img-thumbnail" />
+        </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(input) {
+        var imgPreview = document.getElementById('imgPreview');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</Script>

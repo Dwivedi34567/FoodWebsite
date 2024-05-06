@@ -13,8 +13,6 @@ public partial class Product
 
     public decimal? Price { get; set; }
 
-    public string? ImageUrl { get; set; }
-
     public int? CategoryId { get; set; }
 
     public bool? IsActive { get; set; }
@@ -22,6 +20,10 @@ public partial class Product
     public DateTime? CreatedDate { get; set; }
 
     public DateTime? UpdatedDate { get; set; }
+
+    public byte[]? ImageUrl { get; set; }
+
+    public bool? IsDeleted { get; set; }
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 

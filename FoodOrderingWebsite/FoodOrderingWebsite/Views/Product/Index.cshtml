@@ -1,0 +1,174 @@
+﻿@model FoodOrderingWebsite.ViewModel.ProductViewModel;
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "ProductPage";
+}
+@* <div class="pcoded-inner-content pt-0">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+                                <div class="row"> *@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="sub-title">Product</h4>
+            <form action="/Product/AddProduct" method="POST" enctype="multipart/form-data">
+                <!-- Success/Error Messages -->
+                @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+                {
+                    <div class="alert alert-success" role="alert">
+                        Product added successfully
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                <!-- Product Name -->
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" name="ProductName" class="form-control" placeholder="Enter Product Name">
+                    <span class="validation-message text-danger"></span>
+                </div>
+                <!-- Product Description -->
+                <div class="form-group">
+                    <label>Product Description</label>
+                    <textarea name="ProductDescription" class="form-control" placeholder="Enter Product Description"></textarea>
+                    <span class="validation-message text-danger"></span>
+                </div>
+                <!-- Product Price -->
+                <div class="form-group">
+                    <label>Product Price</label>
+                    <input type="text" name="ProductPrice" class="form-control" placeholder="Enter Product Price">
+                    <span class="validation-message text-danger"></span>
+                </div>
+                <!-- Product Quantity -->
+                <div class="form-group">
+                    <label>Product Quantity</label>
+                    <input type="text" name="ProductQuantity" class="form-control" placeholder="Enter Product Quantity">
+                    <span class="validation-message text-danger"></span>
+                </div>
+                <!-- Product Category -->
+                <div class="form-group">
+                    <label>Product Category</label>
+                    <select name="CategoryID" class="form-control form-control-solid form-control-lg">
+                        <option value="">Please select category</option>
+                        @if (Model != null && Model.ProductCategoryList != null)
+                        {
+                            @foreach (var Category in Model.ProductCategoryList)
+                            {
+                                <option value="@Category.CategoryID">@Category.ProductCategory</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No Category Found</option>
+                        }
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+                <!-- Product Image -->
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="file" name="ProductImage" class="form-control" onchange="previewImage(this);">
+                </div>
+                <!-- IsActive Checkbox -->
+                 <div class="form-check pl-4">
+    <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input is-active" value="true" @(Model.IsActive ? "checked" : "")>
+    <label class="form-check-label" for="IsActive">IsActive</label>
+</div>
+                <!-- Buttons -->
+                <div class="pb-3"></div> <!-- Add some padding between the IsActive checkbox and the buttons -->
+                <div>
+                    <button type="submit" class="btn btn-primary mr-2">Add</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                </div>
+                <!-- Image Preview -->
+                <div class="pb-5">&nbsp;</div>
+                <div>
+                    <img id="imgPreview" class="img-thumbnail" src="" alt="Category Image" style="display:none;">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+                                   
+                                    <!-- HTML -->
+                                    @* Delete Popup code *@
+                                    <div class="modal fade " id="deletegroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Delete the category</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <span class="delete-text"> Are you sure to delete this category</span>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-primary danger">Yes, Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Add this Bootstrap alert at the top of your HTML, outside of any specific modal or section -->
+                                    <div class="modal fade " id="deletesuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body" style="background-color: #d4edda; border-color:#c3e6cb;color:#155724">
+                                                    <span class="delete-text"> Category deleted successfully</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @* Assuming Model.Categories is a list of category objects with properties Name, ImageUrl, and Id. You may need to adjust the property names accordingly. *@
+
+                                @* </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+<script>
+    function previewImage(input) {
+        var imgPreview = document.getElementById('imgPreview');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var mimeType = getImageMimeType(input.files[0]);
+                var dataURL = e.target.result;
+                imgPreview.src = "data:" + mimeType + ";base64," + dataURL.split(',')[1];
+                imgPreview.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Function to get MIME type from image file
+    function getImageMimeType(file) {
+        var mimeType = file.type;
+        if (!mimeType) {
+            mimeType = "image/jpeg"; // default to JPEG if type is not available
+        }
+        return mimeType;
+    }
+</Script>

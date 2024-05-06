@@ -33,7 +33,7 @@
                                             <div>
                                                 <div class="form-group">
                                                     <label>Category Name</label>
-                                                    @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control", placeholder = "Enter Category Name"})
+                                                    @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control category-name", placeholder = "Enter Category Name"})
                                                     @Html.HiddenFor(model => model.CategoryID)
                                                     <span class="validation-message text-danger">@Html.ValidationMessageFor(model => model.CategoryName)</span>
                                                 </div>
@@ -41,12 +41,12 @@
                                             <div class="form-group">
                                                 <label>Category Image</label>
                                                 <div>
-                                                    <input type="file" id="fuCategoryImage" name="CategoryImage" class="form-control" onchange="previewImage(this);" />
+                                                    <input type="file" id="fuCategoryImage" name="CategoryImage" class="form-control category-img" onchange="previewImage(this);" />
                                                 </div>
                                                
                                             </div>
                                             <div class="form-check pl-4">
-                                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input" })
+                                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input is-active" })
                                                 <label class="form-check-label" for="cbIsActive">IsActive</label>
                                             </div>
                                             <div class="pb-3"></div> <!-- Add some padding between the IsActive checkbox and the buttons -->
@@ -146,7 +146,9 @@
     $(document).ready(function () {
         $('#Category').DataTable({
             "pagingType": "simple", // Use simple pagination style with only previous and next buttons
-            "pageLength": 4 // Set page size to 4
+            "pageLength": 4, // Set page size to 4
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]], // Allow users to choose page sizes
+            "order": [[0, "asc"]],
         });
     });
 </script>
@@ -165,6 +167,20 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    function clearForm() {
+        // Clear the text input field for Category Name
+        $('.category-name').val('');
+
+        // Clear the file input field for Category Image
+        $('.category-img').val('');
+
+        // Uncheck the checkbox for IsActive
+        $('.is-active').prop('checked', false);
+
+        // Hide the preview image
+        $('.img-thumbnail').hide();
     }
 
     // Function to get MIME type from image file
