@@ -11,7 +11,7 @@
                 <!-- Success/Error Messages -->
                 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
                 {
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" role="alert" id="successmessage">
                         Product updated successfully
                     </div>
                 }
@@ -105,5 +105,14 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+     var successMessage = document.getElementById('successmessage');
+
+    // If the success message element is found, redirect after a delay
+    if (successMessage !== null) {
+        setTimeout(function () {
+            window.location.href = '@Url.Action("ProductList", "Product")'; 
+        }, 3000); // 4000 milliseconds = 4 seconds
     }
 </Script>
