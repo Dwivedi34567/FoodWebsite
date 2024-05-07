@@ -2,5 +2,47 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     ViewData["Title"] = "User Page";
 }
+@model FoodOrderingWebsite.ViewModel.RegisterViewModel;
+<div class="parent-container">
+<div class="login-container">
+  <h2>User Registration</h2>
+  <form action="/User/Register" method="post">
+            @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+            {
+                <div class="alert alert-success" role="alert" id="successmessage">
+                    User Registered Successfully.
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+    <div class="login-form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <span class="validation-message text-danger">@Html.ValidationMessageFor(model => model.UserName)</span>
+    </div>
+    <div class="login-form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+      <span class="validation-message text-danger">@Html.ValidationMessageFor(model => model.Email)</span>
+    </div>
+    <div class="login-form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span class="validation-message text-danger">@Html.ValidationMessageFor(model => model.Password)</span>
+    </div>
+    <div class="login-form-group">
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" name="ConfirmPassword">
+       <span class="validation-message text-danger">@Html.ValidationMessageFor(model => model.ConfirmPassword)</span>
+    </div>
+    <div class="login-form-group">
+      <button type="submit">Register</button> If registered already? <a href="~/User/Login" class="login-anchor">Login</a>
+    </div>
+  </form>
+</div>
+</div>
 
-<h1>This is user page</h1>
