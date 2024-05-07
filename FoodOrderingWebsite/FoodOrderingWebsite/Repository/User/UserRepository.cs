@@ -1,6 +1,6 @@
 ﻿using FoodOrderingWebsite.Helper;
-using FoodOrderingWebsite.Utility;
 using FoodOrderingWebsite.ViewModel;
+using Microsoft.Win32;
 using System.Data;
 
 namespace FoodOrderingWebsite.Repository.User
@@ -13,19 +13,20 @@ namespace FoodOrderingWebsite.Repository.User
         /// Constructor for CategoryRepository class
         /// </summary>
         /// <param name="dbHelper"></param>
+        
         public UserRepository(DbHelper dbHelper)
         {
             _dbHelper = dbHelper;
 
         }
-        public DataTable AddUser(RegisterViewModel register)
+        public DataTable Register(RegisterViewModel register)
         {
             try
             {
                 string procedureName = "spAddUser";
 
                 // Hash the password
-                string hashedPassword = Crypt.ComputeMD5Hash(register.ConfirmPassword);
+                string hashedPassword = Crypt.Encrypt(register.ConfirmPassword);
 
                 // Prepare the parameters for the stored procedure
                 Dictionary<string, object> parameters = new Dictionary<string, object>
@@ -42,7 +43,33 @@ namespace FoodOrderingWebsite.Repository.User
                 throw;
             }
         }
+        public RegisterViewModel LoginUser(LoginViewModel login)
+        {
+            try
+            {
+                string procedureName = "spLoginUser";
+                string hashedPassword = Crypt.Encrypt(login.Password); ;
 
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "Email", login.Email },
+                    { "Password", hashedPassword }
+                };
+                DataTable userData = _dbHelper.ExecuteStoredProcedure(procedureName, parameters);
+                RegisterViewModel result = new RegisterViewModel();
+                if(userData != null)
+                {
+                   result.Password = Crypt.Decrypt(userData.Rows[0]["Password"].ToString());
+                   result.Email = userData.Rows[0]["Email"].ToString();
+                   result.UserName = userData.Rows[0]["Email"].ToString();
+                }
+                return result;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
 
     }

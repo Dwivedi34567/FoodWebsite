@@ -5,6 +5,8 @@ namespace FoodOrderingWebsite.Repository.User
 {
     public interface IUserRepository
     {
-        public DataTable AddUser(RegisterViewModel register);
+        public DataTable Register(RegisterViewModel register);
+
+        RegisterViewModel LoginUser(LoginViewModel login);
     }
 }
