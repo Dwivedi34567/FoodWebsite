@@ -58,9 +58,16 @@ namespace FoodOrderingWebsite.Controllers
                     if (isLogin.Email != null && isLogin.Password != null)
                     {
                         ViewBag.IsSuccess = true;
-                        return RedirectToAction("Index","Home");
+                        //_userRepository.GenerateToken(login);
+                        //return RedirectToAction("Index","Home");
+                        var token = _userRepository.GenerateToken(login);
+                        HttpContext.Response.Headers.Add("Authorization", "Bearer " + token);
+                        // Return the token to the client along with the redirection
+
+                        return RedirectToAction("Index", "Home");
                     }
                 }
+                
                 return View("Login", login);
             }
             catch(Exception ex)

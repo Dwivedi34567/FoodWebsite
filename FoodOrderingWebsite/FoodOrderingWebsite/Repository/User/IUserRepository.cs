@@ -8,5 +8,6 @@ namespace FoodOrderingWebsite.Repository.User
         public DataTable Register(RegisterViewModel register);
 
         RegisterViewModel LoginUser(LoginViewModel login);
+        string GenerateToken(LoginViewModel user);
     }
 }
